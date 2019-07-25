@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import CartController from '../controllers/cart_controller';
+import CartsController from '../controllers/carts_controller';
 
 const router = Router();
 
-router.get('/', CartController.getAllCarts);
-router.get('/:id', CartController.getCart);
-router.post('/', CartController.createCart);
-router.put('/:id', CartController.updateCart);
-router.delete('/:id', CartController.destroyCart);
-
+router.get('/', CartsController.getAllCarts);
+router.get('/:id', CartsController.getCart);
+router.post('/', CartsController.createCart);
+router.put('/:id', CartsController.updateCart);
+router.delete('/:id', CartsController.destroyCart);
+router.post('/:id/add_product', CartsController.addToCart);
 
 export default router;

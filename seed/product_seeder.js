@@ -1,4 +1,4 @@
-var Product = require('../models/product');
+var Product = require('../api/models/product');
 var mongoose = require('mongoose');
 
 // create mongodb with local variables

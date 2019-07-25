@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 
 import cartRoutes from './api/routes/cartRoutes';
+import productRoutes from './api/routes/productRoutes';
 var indexRouter = require('./api/routes/index');
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routing
 app.use('/', indexRouter);
 app.use('/carts', cartRoutes);
+app.use('/products', productRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

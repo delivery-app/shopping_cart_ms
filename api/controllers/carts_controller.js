@@ -3,7 +3,7 @@ import Util from '../utils/Utils';
 
 const util = new Util();
 
-class CartController {
+class CartsController {
   /// CRUD logic based on REST 
   static async getAllCarts(req, res) {
     await Cart.find()
@@ -15,7 +15,7 @@ class CartController {
       }
     })
     .catch(function(cartErr) {
-      util.setError('400', cartErr);
+      util.setError(400, 'all cart findig error', cartErr);
     });
     return util.send(res);
   }
@@ -25,10 +25,14 @@ class CartController {
     
     await Cart.findById(cartId)
     .then(function(cart) {
-      util.setSuccess(200, 'Cart found', cart);
+      if (cart) {
+        util.setSuccess(200, 'Cart found', cart);
+      } else {
+        util.setError(404, 'Cart not found');
+      }
     })
-    .catch(function(error) {
-      util.setError(404, 'Cart not found', error);
+    .catch(function(cartErr) {
+      util.setError(400, 'Cart finding error', cartErr);
     });
     return util.send(res);
   }
@@ -69,7 +73,7 @@ class CartController {
 
     await Cart.findByIdAndDelete(cartId)
     .then(function(deletedCart){
-      console.log(deletedCart);
+
       if (deletedCart) {
         util.setSuccess(200, 'Cart successfully deleted', deletedCart);
       } else {
@@ -83,31 +87,49 @@ class CartController {
   }
 
   /// management of products inside shopping cart
-  static inCart(productId, cart) {
-    let found = false;
-    cart.items.forEach(item => {
-       if(item.id === productId) {
-           found = true;
-       }
+  static productExists(product, cart) {
+    var exists = false;
+
+    cart.items.forEach(item => { 
+      console.log('here', item);
+      if(item._id == product._id) {
+        item.qty += product.qty;
+        console.log(item);
+        exists = true;
+      }
     });
-    return found;
+    return exists;
+  }
+
+  static async addToCart(req, res) {
+    var cartId = req.params.id;
+    var product = req.body.product;
+
+    await Cart.findById(cartId)
+    .then(async function(cart) {
+      if (cart) {  
+        if (!CartsController.productExists(product, cart)) {
+          cart.items.push(product);
+        }
+        console.log(cart)
+        await Cart.update(cart)
+        .then(function(updatedCart) {
+          console.log('WTF', updatedCart);
+          util.setSuccess(201, 'Product successfully added', updatedCart);
+        })
+        .catch(function(cartErr) {
+          util.setError(400, 'Cart updating error', cartErr);
+        });
+      } else {
+        util.setError(404, 'Cart not found');
+      }
+    })
+    .catch(function(cartErr) {
+      util.setError(400, 'Product adding error', cartErr);
+    });
+    return util.send(res);
   }
   /*
-    static addToCart(product = null, qty = 1, cart) {
-        if(!this.inCart(product.product_id, cart)) {
-            let format = new Intl.NumberFormat(config.locale.lang, {style: 'currency', currency: config.locale.currency });
-            let prod = {
-              id: product.product_id,
-              title: product.title,
-              price: product.price,
-              qty: qty,
-              image: product.image,
-              formattedPrice: format.format(product.price)
-            };
-            cart.items.push(prod);
-            this.calculateTotals(cart);
-        }
-    }
 
     static removeFromCart(id = 0, cart) {
         for(let i = 0; i < cart.items.length; i++) {
@@ -144,4 +166,4 @@ class CartController {
 */
 }
 
-export default CartController;
+export default CartsController;
