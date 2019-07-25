@@ -18,10 +18,6 @@ var db_name = 'shopping_cart';
 
 mongoose.connect(`mongodb://${db_host}:${db_port}/${db_name}`, { useNewUrlParser: true });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
