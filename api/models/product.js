@@ -10,7 +10,7 @@ var productSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true, default: 0 },
   qty: { type: Number, required: true, default: 1 },
-  shop_id: { type: String }
+  restaurant_id: { type: String }
 });
 
 productSchema.plugin(autoIncrement.plugin, 'Product');

@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 import cartRoutes from './api/routes/cartRoutes';
 import productRoutes from './api/routes/productRoutes';
+import restaurantRoutes from './api/routes/restaurantRoutes';
 var indexRouter = require('./api/routes/index');
 
 var app = express();
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/carts', cartRoutes);
 app.use('/products', productRoutes);
+app.use('/restaurants', restaurantRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
