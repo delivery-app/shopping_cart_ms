@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/', CartsController.getAllCarts);
 router.get('/:id', CartsController.getCart);
+router.get('/user_actual_cart/:user_id', CartsController.checkActualCart);
 router.post('/', CartsController.createCart);
 router.put('/:id', CartsController.updateCart);
 router.delete('/:id', CartsController.destroyCart);

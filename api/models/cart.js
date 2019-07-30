@@ -8,7 +8,7 @@ var cartSchema = new Schema({
   user_id: {type: Number, required: true},
   items: { type: Array, required: true },
   total_price: { type: Number, default: 0 },
-  actual_state: { type: String, default: 'In process' }
+  actual_state: { type: String, default: 'using' }
 });
 
 cartSchema.plugin(autoIncrement.plugin, 'Cart');

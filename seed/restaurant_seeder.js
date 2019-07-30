@@ -46,9 +46,9 @@ var Restaurants = [
     delivery_price: 3000
   }),
   new Restaurant({
-    imagePath: 'https://bloximages.newyork1.vip.townnews.com/timesdaily.com/content/tncms/assets/v3/editorial/1/38/1386cb19-b6e4-5f57-8422-34d555a184bb/5d0a2873bcd59.image.jpg',
-    name: 'The Beanery',
-    description: 'just another bean salad restaurant',
+    imagePath: 'https://gpstrackingplus.com/wp-content/uploads/2016/12/Bandeja-Paisa.jpg',
+    name: 'La colombiana',
+    description: 'just a colombian restaurant',
     delivery_price: 3000
   }),
 ];

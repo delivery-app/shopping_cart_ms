@@ -85,6 +85,24 @@ class CartsController {
     return util.send(res);
   }
 
+  static async checkActualCart(req, res) {
+    var userId = req.params.user_id;
+    
+    await Cart.findOne({user_id: userId, actual_state: 'using'})
+    .then(function(actualCart) {
+      if(actualCart) {
+        console.log('hereee'+actualCart);
+        util.setSuccess(200, 'Actual Cart successfully found', actualCart);
+      } else {
+        util.setError(404, 'No actual cart exists');  
+      }
+    })
+    .catch(function(cartErr) {
+      util.setError(400, 'Checking actual cart error', cartErr);
+    });
+    return util.send(res);
+  }
+
   // adds or removes a item by changin its quantity
   static changeProductQty(product, actionQty, action) {
     if (action === 'add') {
